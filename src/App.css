@@ -224,6 +224,93 @@ body {
    SPORT WORKSPACE HEADER
    ═══════════════════════════════════════════════════════════════════════ */
 
+.workspace-subnav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 18px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.workspace-subnav-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sport-title-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #FFFFFF;
+  letter-spacing: 0.03em;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border-subtle);
+}
+
+.strategy-pill {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: rgba(37, 99, 235, 0.1);
+  padding: 4px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(37, 99, 235, 0.25);
+}
+
+.strategy-name {
+  color: #60A5FA;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.workspace-tabs {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: #090D15;
+  padding: 4px;
+  border-radius: 8px;
+  border: 1px solid var(--border-subtle);
+}
+
+.subnav-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.subnav-tab:hover {
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.subnav-tab.active {
+  background: #1E293B;
+  color: #FFFFFF;
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  font-weight: 700;
+}
+
 .sport-workspace-header {
   display: flex;
   align-items: center;
@@ -266,16 +353,6 @@ body {
   align-items: center;
   gap: 6px;
   margin-top: 2px;
-}
-
-.strategy-pill {
-  font-family: monospace;
-  font-weight: 700;
-  color: #60A5FA;
-  background: rgba(37, 99, 235, 0.15);
-  padding: 1px 6px;
-  border-radius: 4px;
-  border: 1px solid rgba(37, 99, 235, 0.3);
 }
 
 .workspace-actions {

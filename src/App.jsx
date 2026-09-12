@@ -16,7 +16,7 @@ import {
   runGolfOptimizer,
   generateDraftKingsCsv 
 } from './services/optimizer';
-import { Sparkles, Layers, Sliders, Database, AlertCircle } from 'lucide-react';
+import { Sparkles, Layers, Sliders, Database, AlertCircle, Swords, Activity, Flag } from 'lucide-react';
 import { checkDjangoBackend, optimizeWithDjangoBackend } from './services/api';
 import './App.css';
 
@@ -298,13 +298,16 @@ export default function App() {
           <div className="sport-workspace">
             {/* Workspace Subheader Navigation */}
             <div className="workspace-subnav">
-              <div className="flex items-center gap-4">
-                <span className="sport-title-badge">
-                  {currentSport === 'mma' ? '🥊 MMA / UFC' : currentSport === 'nba' ? '🏀 NBA Classic' : '⛳ PGA Golf'}
-                </span>
-                <span className="strategy-pill">
-                  Strategy: <strong className="text-blue-400 uppercase">{getCurrentSettings().strategy}</strong>
-                </span>
+              <div className="workspace-subnav-left">
+                <div className="sport-title-badge">
+                  {currentSport === 'mma' && <Swords size={16} className="text-blue-400" />}
+                  {currentSport === 'nba' && <Activity size={16} className="text-blue-400" />}
+                  {currentSport === 'golf' && <Flag size={16} className="text-blue-400" />}
+                  <span>{currentSport === 'mma' ? 'MMA / UFC SLATE' : currentSport === 'nba' ? 'NBA CLASSIC SLATE' : 'PGA TOUR SLATE'}</span>
+                </div>
+                <div className="strategy-pill">
+                  Strategy: <strong className="strategy-name">{getCurrentSettings().strategy}</strong>
+                </div>
               </div>
 
               <div className="workspace-tabs">

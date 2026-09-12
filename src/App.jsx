@@ -268,11 +268,16 @@ export default function App() {
 
   const results = getCurrentResults();
 
+  const handleSwitchSport = (sport) => {
+    setCurrentSport(sport);
+    setSportViewTab('pool');
+  };
+
   return (
     <div className="app-root">
       <Navbar
         currentSport={currentSport}
-        setCurrentSport={setCurrentSport}
+        setCurrentSport={handleSwitchSport}
         onLoadSample={handleLoadSample}
         onOpenImport={() => setIsImportOpen(true)}
         onOpenRules={() => setIsRulesOpen(true)}

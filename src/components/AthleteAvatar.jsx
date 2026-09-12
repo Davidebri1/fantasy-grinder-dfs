@@ -78,11 +78,11 @@ export default function AthleteAvatar({
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            fontFamily: 'monospace',
-            fontWeight: 800,
+            fontFamily: "'Inter', -apple-system, sans-serif",
+            fontWeight: 700,
             fontSize: `${Math.round(px * 0.38)}px`,
-            color: isWhite ? '#475569' : '#94A3B8',
-            background: isWhite ? '#E2E8F0' : '#1E293B',
+            color: '#334155',
+            background: '#E2E8F0',
             borderRadius: '50%',
             zIndex: 0
           }}
@@ -91,7 +91,7 @@ export default function AthleteAvatar({
         </div>
       )}
 
-      {/* Headshot cutout image placed with zero background or clean white */}
+      {/* Headshot cutout image placed with zero background */}
       {!hasError && src ? (
         <img
           src={src}
@@ -113,7 +113,7 @@ export default function AthleteAvatar({
             borderRadius: '50%',
             zIndex: 1,
             display: 'block',
-            filter: isWhite ? 'none' : 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5))',
+            filter: 'drop-shadow(0 1px 2px rgba(0, 0, 0, 0.2))',
             transition: 'opacity 0.2s ease-in-out'
           }}
           onError={() => setHasError(true)}

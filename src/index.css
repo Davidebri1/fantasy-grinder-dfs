@@ -1,23 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 :root {
-  --bg-primary: #0b0f19;
-  --bg-secondary: #111827;
-  --bg-card: #172033;
-  --bg-card-hover: #1e293b;
-  --border-subtle: #243049;
-  --border-strong: #334155;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --accent-blue: #3b82f6;
-  --accent-blue-hover: #2563eb;
-  --accent-emerald: #10b981;
-  --accent-amber: #f59e0b;
-  --accent-rose: #f43f5e;
-  --accent-purple: #8b5cf6;
-  --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
+  /* Authentic Corporate Enterprise Color System */
+  --bg-primary: #F8FAFC;        /* Clean executive slate canvas */
+  --bg-secondary: #FFFFFF;      /* Pure white cards and containers */
+  --bg-surface: #FFFFFF;        /* Pure white table surfaces */
+  --bg-card: #FFFFFF;           /* Card containers */
+  --bg-card-hover: #F1F5F9;     /* Subtle light gray hover */
+  --bg-subtle: #F1F5F9;         /* Slate-100 toolbar / badge background */
+  
+  --border-subtle: #E2E8F0;     /* Crisp Slate-200 border */
+  --border-strong: #CBD5E1;     /* Slate-300 structural line */
+  --border-focus: #2563EB;      /* Enterprise blue focus ring */
+  
+  --text-primary: #0F172A;      /* Slate-900 high-contrast executive text */
+  --text-secondary: #475569;    /* Slate-600 subtext and labels */
+  --text-muted: #64748B;        /* Slate-500 captions and secondary data */
+  
+  --accent-blue: #1D4ED8;       /* Institutional corporate blue */
+  --accent-blue-hover: #1E40AF;
+  --accent-blue-subtle: #EFF6FF; /* Blue-50 subtle badge background */
+  --accent-emerald: #059669;    /* Corporate green */
+  --accent-emerald-subtle: #ECFDF5;
+  --accent-amber: #D97706;      /* Corporate amber */
+  --accent-amber-subtle: #FFFBEB;
+  --accent-rose: #DC2626;       /* Corporate red */
+  --accent-rose-subtle: #FEF2F2;
+  
+  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
 }
 
 * {
@@ -48,6 +63,12 @@ input, select {
   font-family: inherit;
 }
 
+/* Tabular figures for financial and sports analytics accuracy */
+.tabular-nums, td, .stat-value, .lineup-stat, input[type="number"] {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
 /* Scrollbar styling */
 ::-webkit-scrollbar {
   width: 8px;
@@ -55,19 +76,19 @@ input, select {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg-secondary);
+  background: #F1F5F9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border-strong);
+  background: #CBD5E1;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-muted);
+  background: #94A3B8;
 }
 
-/* Common Utility Classes */
+/* Utility Classes */
 .flex { display: flex; }
 .items-center { align-items: center; }
 .justify-between { justify-content: space-between; }
@@ -79,23 +100,23 @@ input, select {
 .gap-4 { gap: 16px; }
 .text-right { text-align: right; }
 .text-center { text-align: center; }
-.font-mono { font-family: var(--font-mono); }
+.font-mono { font-variant-numeric: tabular-nums; font-feature-settings: "tnum" 1; }
 .font-bold { font-weight: 700; }
 .font-semibold { font-weight: 600; }
 .text-xs { font-size: 11px; }
 .text-sm { font-size: 13px; }
 .text-lg { font-size: 18px; }
 .text-xl { font-size: 20px; }
-.text-gray-200 { color: #e2e8f0; }
-.text-gray-300 { color: #cbd5e1; }
-.text-gray-400 { color: #94a3b8; }
-.text-blue-300 { color: #93c5fd; }
-.text-blue-400 { color: #60a5fa; }
-.text-emerald-400 { color: #34d399; }
-.text-amber-400 { color: #fbbf24; }
-.text-rose-400 { color: #fb7185; }
-.text-purple-300 { color: #d8b4fe; }
-.text-purple-400 { color: #c084fc; }
+.text-gray-200 { color: #475569; }
+.text-gray-300 { color: #334155; }
+.text-gray-400 { color: #64748B; }
+.text-blue-300 { color: #2563EB; }
+.text-blue-400 { color: #1D4ED8; }
+.text-emerald-400 { color: #059669; }
+.text-amber-400 { color: #D97706; }
+.text-rose-400 { color: #DC2626; }
+.text-purple-300 { color: #7C3AED; }
+.text-purple-400 { color: #6D28D9; }
 .ml-auto { margin-left: auto; }
 .shrink-0 { flex-shrink: 0; }
 

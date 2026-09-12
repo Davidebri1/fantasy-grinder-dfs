@@ -7,6 +7,9 @@ const DJANGO_BASE_URL = 'http://localhost:8000/api';
  * Health check to verify if the Django REST backend server is currently running.
  */
 export async function checkDjangoBackend() {
+  if (typeof window === 'undefined' || (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1')) {
+    return false;
+  }
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 1800);

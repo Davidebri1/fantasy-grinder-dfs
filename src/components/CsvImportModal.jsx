@@ -167,8 +167,9 @@ export default function CsvImportModal({
           {parsedPreview && (
             <div className="form-section">
               <div className="flex items-center justify-between">
-                <span className="section-label text-emerald-400">
-                  ✓ Successfully Detected {parsedPreview.length} Athletes
+                <span className="section-label text-emerald-400 flex items-center gap-1.5">
+                  <CheckCircle2 size={13} className="text-emerald-400" />
+                  Successfully Detected {parsedPreview.length} Athletes
                 </span>
                 <span className="text-xs font-mono text-gray-400">
                   Salaries: ${Math.min(...parsedPreview.map(p => p.salary)).toLocaleString()} – ${Math.max(...parsedPreview.map(p => p.salary)).toLocaleString()}

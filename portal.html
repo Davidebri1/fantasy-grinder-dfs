@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fantasy Grinder DFS Optimizer — Official Deliverables & Resource Hub</title>
+  <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090b10;
+      --card: #111622;
+      --border: #1e293b;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      --purple: #8b5cf6;
+      --text: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+      line-height: 1.6;
+      padding: 40px 20px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .container {
+      max-width: 960px;
+      width: 100%;
+    }
+    .header {
+      margin-bottom: 36px;
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: rgba(59, 130, 246, 0.15);
+      border: 1px solid rgba(59, 130, 246, 0.3);
+      border-radius: 9999px;
+      color: #60a5fa;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 12px;
+      background: linear-gradient(135deg, #ffffff 40%, #94a3b8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p.lead {
+      color: var(--text-muted);
+      font-size: 16px;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .launch-banner {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(16, 185, 129, 0.15));
+      border: 1px solid rgba(59, 130, 246, 0.35);
+      border-radius: 18px;
+      padding: 24px 28px;
+      margin-bottom: 36px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    .launch-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+    .launch-sub {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .btn-main {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #3b82f6;
+      color: #ffffff;
+      font-size: 15px;
+      font-weight: 700;
+      padding: 14px 28px;
+      border-radius: 12px;
+      text-decoration: none;
+      box-shadow: 0 4px 14px rgba(59, 130, 246, 0.4);
+      transition: all 0.2s;
+    }
+    .btn-main:hover {
+      background: #2563eb;
+      transform: translateY(-2px);
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+      margin-bottom: 36px;
+    }
+    .deliverable-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .deliverable-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(59, 130, 246, 0.5);
+    }
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .card-meta {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      color: #60a5fa;
+      margin-bottom: 12px;
+    }
+    .card-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #ffffff;
+      padding: 10px 18px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 14px;
+      transition: all 0.15s ease;
+    }
+    .btn:hover {
+      background: var(--accent-hover);
+    }
+    .btn-emerald {
+      background: #059669;
+    }
+    .btn-emerald:hover {
+      background: #047857;
+    }
+    .btn-purple {
+      background: #7c3aed;
+    }
+    .btn-purple:hover {
+      background: #6d28d9;
+    }
+    .btn-amber {
+      background: #d97706;
+    }
+    .btn-amber:hover {
+      background: #b45309;
+    }
+    .features-list {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 36px;
+    }
+    .features-list h3 {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      color: #ffffff;
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+    .feat-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+    .feat-item strong {
+      color: #f1f5f9;
+    }
+    .footer {
+      text-align: center;
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 20px;
+    }
+    .footer a {
+      color: #60a5fa;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <span class="badge">Permanent Production Deliverables</span>
+      <h1>Fantasy Grinder DFS Optimizer</h1>
+      <p class="lead">Complete delivery stack: Live Web Application, Excel Mathematical Formulation Solver, Native Desktop Launcher, and Full Code Repositories.</p>
+    </div>
+
+    <!-- Primary Live App Banner -->
+    <div class="launch-banner">
+      <div>
+        <div class="launch-title">🚀 Live Web Application (Permanent Hosting)</div>
+        <div class="launch-sub">Runs instantly in any browser — UFC MMA, NBA Classic 8-Slot, and PGA Golf with 100% authentic athlete portraits.</div>
+      </div>
+      <a href="./index.html" class="btn-main">
+        Launch Web Optimizer →
+      </a>
+    </div>
+
+    <div class="card-grid">
+      <!-- Excel Solver Model -->
+      <div class="deliverable-card">
+        <div>
+          <div class="card-title">📊 Excel Formulation Model</div>
+          <div class="card-meta">dfs_optimizer_excel_model.xlsx • Complete Solver</div>
+          <div class="card-desc">
+            Binary Integer Linear Programming formulation (x_i in {0, 1}) with objective function, exact $50,000 salary cap, and bout opponent exclusion rules ready for Excel Solver or OpenSolver.
+          </div>
+        </div>
+        <a href="./dfs_optimizer_excel_model.xlsx" class="btn btn-purple" download>
+          Download Excel Model (.xlsx)
+        </a>
+      </div>
+
+      <!-- React 19 Optimizer Codebase -->
+      <div class="deliverable-card">
+        <div>
+          <div class="card-title">⚛️ React 19 Web Optimizer</div>
+          <div class="card-meta">Source Code & Static Bundle</div>
+          <div class="card-desc">
+            Modern React frontend featuring in-browser Branch & Bound knapsack solver, portfolio exposure matrix, and DraftKings CSV exporter.
+          </div>
+        </div>
+        <a href="https://github.com/Davidebri1/fantasy-grinder-dfs/archive/refs/heads/main.zip" class="btn" download>
+          Download React Package (.zip)
+        </a>
+      </div>
+
+      <!-- Django REST Backend -->
+      <div class="deliverable-card">
+        <div>
+          <div class="card-title">🐍 Django Python Backend</div>
+          <div class="card-meta">dfs-optimizer-django • REST API</div>
+          <div class="card-desc">
+            Python MILP solver API with PuLP & SciPy integration, user management, and DraftKings slate endpoints at <code>/api/optimize/</code>.
+          </div>
+        </div>
+        <a href="https://storage.googleapis.com/dfs-optimizer-deliverables-9921/dfs-optimizer-django.zip" class="btn btn-emerald" download>
+          Download Django API (.zip)
+        </a>
+      </div>
+
+      <!-- Flutter Cross-Platform App -->
+      <div class="deliverable-card">
+        <div>
+          <div class="card-title">📱 Flutter Multi-Sport App</div>
+          <div class="card-meta">Flutter_DFS_Optimizer.zip • 18 MB</div>
+          <div class="card-desc">
+            Cross-platform Flutter codebase supporting Windows Desktop, macOS, and Web with native CSV import dialogs and Cholesky simulation engine.
+          </div>
+        </div>
+        <a href="https://storage.googleapis.com/dfs-optimizer-deliverables-9921/Flutter_DFS_Optimizer.zip" class="btn btn-amber" download>
+          Download Flutter Package (.zip)
+        </a>
+      </div>
+    </div>
+
+    <!-- Features & Mathematical Model -->
+    <div class="features-list">
+      <h3>📐 Mathematical Formulation & Sports Parity</h3>
+      <div class="features-grid">
+        <div class="feat-item">
+          <span>🥊</span>
+          <div><strong>UFC MMA Optimizer:</strong> 6 fighters, $50,000 cap, bout opponent exclusion (opponents never co-rostered in same lineup).</div>
+        </div>
+        <div class="feat-item">
+          <span>🏀</span>
+          <div><strong>NBA Classic Optimizer:</strong> 8 classic DraftKings slots (PG, SG, SF, PF, C, G, F, UTIL), $50,000 cap, max 4 players per team.</div>
+        </div>
+        <div class="feat-item">
+          <span>⛳</span>
+          <div><strong>PGA Golf Optimizer:</strong> 6 golfers, $50,000 cap, cut-making probability upside weighting.</div>
+        </div>
+        <div class="feat-item">
+          <span>👥</span>
+          <div><strong>Authentic Athlete Headshots:</strong> 100% official league studio cutouts and vector team logos (zero mock placeholders).</div>
+        </div>
+        <div class="feat-item">
+          <span>📊</span>
+          <div><strong>Portfolio Exposure Matrix:</strong> Real-time exposure percentage tracking with progress bars and lock/fade controls.</div>
+        </div>
+        <div class="feat-item">
+          <span>📥</span>
+          <div><strong>DraftKings CSV Export:</strong> 1-click export formatted specifically for official DraftKings contest upload.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <p>Public Repository: <a href="https://github.com/Davidebri1/fantasy-grinder-dfs" target="_blank">github.com/Davidebri1/fantasy-grinder-dfs</a></p>
+      <p style="margin-top: 6px;">Permanent GitHub Pages Deployment • SSL Secured • Zero Expiration</p>
+    </div>
+  </div>
+</body>
+</html>

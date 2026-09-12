@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function AthleteAvatar({ 
   src, 
@@ -6,9 +6,24 @@ export default function AthleteAvatar({
   team, 
   sport = 'mma', 
   size = 'md',
-  className = '' 
+  className = '',
+  backdrop
 }) {
   const [hasError, setHasError] = useState(!src);
+  const [bgMode, setBgMode] = useState(() => {
+    return localStorage.getItem('avatar_bg_mode') || 'transparent';
+  });
+
+  useEffect(() => {
+    const handleBgChange = () => {
+      setBgMode(localStorage.getItem('avatar_bg_mode') || 'transparent');
+    };
+    window.addEventListener('avatar_bg_change', handleBgChange);
+    return () => window.removeEventListener('avatar_bg_change', handleBgChange);
+  }, []);
+
+  const activeMode = backdrop || bgMode; // 'transparent' (no background at all, just portrait) or 'white'
+  const isWhite = activeMode === 'white';
 
   const getInitials = (fullName) => {
     if (!fullName) return '?';
@@ -17,18 +32,6 @@ export default function AthleteAvatar({
       return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
     }
     return fullName.substring(0, 2).toUpperCase();
-  };
-
-  const getSportGradient = (sp) => {
-    switch ((sp || '').toLowerCase()) {
-      case 'nba':
-        return 'linear-gradient(135deg, #1D4ED8 0%, #0F172A 100%)';
-      case 'golf':
-        return 'linear-gradient(135deg, #059669 0%, #022C22 100%)';
-      case 'mma':
-      default:
-        return 'linear-gradient(135deg, #4F46E5 0%, #1E1B4B 100%)';
-    }
   };
 
   const pixelSizes = {
@@ -58,34 +61,37 @@ export default function AthleteAvatar({
         alignItems: 'center',
         justifyContent: 'center',
         flexShrink: 0,
-        backgroundColor: '#121620',
-        border: '1.5px solid rgba(255, 255, 255, 0.16)',
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.5)',
+        backgroundColor: isWhite ? '#FFFFFF' : 'transparent',
+        border: isWhite ? '1.5px solid rgba(255, 255, 255, 0.5)' : 'none',
+        boxShadow: isWhite ? '0 2px 6px rgba(0, 0, 0, 0.35)' : 'none',
         userSelect: 'none'
       }}
       title={name}
     >
-      {/* Underlying fallback initials */}
-      <div 
-        className="athlete-avatar-fallback"
-        style={{
-          position: 'absolute',
-          inset: 0,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontFamily: 'monospace',
-          fontWeight: 800,
-          fontSize: `${Math.round(px * 0.38)}px`,
-          color: '#FFFFFF',
-          background: getSportGradient(sport),
-          zIndex: 0
-        }}
-      >
-        {getInitials(name)}
-      </div>
+      {/* Fallback ONLY displayed if image fails to load or has no src */}
+      {(hasError || !src) && (
+        <div 
+          className="athlete-avatar-fallback"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontFamily: 'monospace',
+            fontWeight: 800,
+            fontSize: `${Math.round(px * 0.38)}px`,
+            color: isWhite ? '#475569' : '#94A3B8',
+            background: isWhite ? '#E2E8F0' : '#1E293B',
+            borderRadius: '50%',
+            zIndex: 0
+          }}
+        >
+          {getInitials(name)}
+        </div>
+      )}
 
-      {/* Headshot image placed over fallback */}
+      {/* Headshot cutout image placed with zero background or clean white */}
       {!hasError && src ? (
         <img
           src={src}
@@ -107,6 +113,7 @@ export default function AthleteAvatar({
             borderRadius: '50%',
             zIndex: 1,
             display: 'block',
+            filter: isWhite ? 'none' : 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5))',
             transition: 'opacity 0.2s ease-in-out'
           }}
           onError={() => setHasError(true)}

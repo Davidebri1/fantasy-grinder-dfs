@@ -1,13 +1,20 @@
 import React from 'react';
 import { 
-  Zap, 
+  Shield, 
   Settings, 
   RotateCcw, 
   Download, 
+  Upload,
   Database, 
-  Sparkles,
+  Cpu,
   Layers,
-  ChevronRight
+  LayoutDashboard,
+  Swords,
+  Activity,
+  Flag,
+  FileSpreadsheet,
+  CheckCircle2,
+  Sliders
 } from 'lucide-react';
 
 export default function Navbar({ 
@@ -23,10 +30,10 @@ export default function Navbar({
   onExportCsv
 }) {
   const sports = [
-    { id: 'overview', label: 'Overview', icon: '⚡' },
-    { id: 'mma', label: 'MMA (UFC)', icon: '🥊', color: 'emerald' },
-    { id: 'nba', label: 'NBA', icon: '🏀', color: 'orange' },
-    { id: 'golf', label: 'PGA Golf', icon: '⛳', color: 'teal' },
+    { id: 'overview', label: 'Overview', IconComponent: LayoutDashboard },
+    { id: 'mma', label: 'MMA / UFC', IconComponent: Swords },
+    { id: 'nba', label: 'NBA Basketball', IconComponent: Activity },
+    { id: 'golf', label: 'PGA Tour Golf', IconComponent: Flag },
   ];
 
   return (
@@ -34,24 +41,25 @@ export default function Navbar({
       <div className="navbar-left">
         <div className="brand-badge" onClick={() => setCurrentSport('overview')}>
           <div className="brand-icon">
-            <Zap size={20} className="text-blue-400" />
+            <Shield size={18} className="text-blue-400" />
           </div>
           <div>
-            <div className="brand-title">Fantasy Grinder</div>
-            <div className="brand-subtitle">DFS Portfolio Optimizer</div>
+            <div className="brand-title">FANTASY GRINDER</div>
+            <div className="brand-subtitle">ENTERPRISE OPTIMIZER</div>
           </div>
         </div>
 
         <nav className="nav-tabs">
           {sports.map(s => {
             const isActive = currentSport === s.id;
+            const Icon = s.IconComponent;
             return (
               <button
                 key={s.id}
                 onClick={() => setCurrentSport(s.id)}
-                className={`nav-tab ${isActive ? 'active' : ''} ${s.color || ''}`}
+                className={`nav-tab ${isActive ? 'active' : ''}`}
               >
-                <span className="tab-icon">{s.icon}</span>
+                <Icon size={14} className="tab-icon" />
                 <span>{s.label}</span>
               </button>
             );
@@ -67,8 +75,8 @@ export default function Navbar({
               className="btn-secondary"
               title="Import DraftKings CSV contest slate"
             >
-              <Download size={15} style={{ transform: 'rotate(180deg)' }} />
-              <span>Import CSV</span>
+              <Upload size={14} />
+              <span>Import Slate</span>
             </button>
 
             <button 
@@ -76,7 +84,7 @@ export default function Navbar({
               className="btn-secondary"
               title="Load realistic DraftKings sample slate"
             >
-              <Database size={15} />
+              <Database size={14} />
               <span>Sample Slate</span>
             </button>
 
@@ -85,36 +93,36 @@ export default function Navbar({
               className="btn-secondary"
               title="Configure optimization rules, strategy & constraints"
             >
-              <Settings size={15} />
-              <span>Rules & Settings</span>
+              <Sliders size={14} />
+              <span>Rules & Constraints</span>
             </button>
 
             <button 
               onClick={onReset}
               className="btn-ghost"
-              title="Reset locks and exclusions"
+              title="Reset all locks and exclusions"
             >
-              <RotateCcw size={15} />
+              <RotateCcw size={14} />
             </button>
 
             {lineupCount > 0 && (
               <button 
                 onClick={onExportCsv}
-                className="btn-accent"
-                title="Download DraftKings compliant CSV"
+                className="btn-secondary"
+                title="Download DraftKings contest upload CSV"
               >
-                <Download size={15} />
-                <span>Export CSV</span>
+                <FileSpreadsheet size={14} />
+                <span>Export CSV ({lineupCount})</span>
               </button>
             )}
 
             <button 
-              onClick={onOptimize}
+              onClick={onOptimize} 
               disabled={isOptimizing}
               className="btn-primary"
             >
-              <Sparkles size={16} className={isOptimizing ? 'animate-spin' : ''} />
-              <span>{isOptimizing ? 'Optimizing...' : 'Generate Lineups'}</span>
+              <Cpu size={14} className={isOptimizing ? 'animate-spin' : ''} />
+              <span>{isOptimizing ? 'Optimizing...' : 'Execute Optimizer'}</span>
             </button>
           </>
         )}

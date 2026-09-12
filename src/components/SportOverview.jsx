@@ -6,11 +6,12 @@ import {
   Sliders, 
   BarChart3, 
   Cpu, 
-  ArrowRight,
-  TrendingUp,
-  CheckCircle2,
-  FileSpreadsheet,
-  Globe
+  ArrowRight, 
+  Lock, 
+  Ban,
+  Swords, 
+  Activity, 
+  Flag 
 } from 'lucide-react';
 
 export default function SportOverview({ onSelectSport }) {
@@ -18,7 +19,7 @@ export default function SportOverview({ onSelectSport }) {
     {
       id: 'mma',
       title: 'MMA / UFC',
-      icon: '🥊',
+      IconComponent: Swords,
       badge: 'Bout Constraints',
       accentColor: '#1E6A4E',
       description: 'Simulate bout outcomes, enforce opponent exclusions, manage exposure limits, and build high-upside GPP tournament lineups.',
@@ -28,7 +29,7 @@ export default function SportOverview({ onSelectSport }) {
     {
       id: 'nba',
       title: 'NBA Basketball',
-      icon: '🏀',
+      IconComponent: Activity,
       badge: 'Classic 8-Slot',
       accentColor: '#B85C2E',
       description: 'Classic 8-slot DraftKings construction (PG, SG, SF, PF, C, G, F, UTIL) with team stacking rules, correlation, and injury reactivity.',
@@ -37,8 +38,8 @@ export default function SportOverview({ onSelectSport }) {
     },
     {
       id: 'golf',
-      title: 'PGA Golf',
-      icon: '⛳',
+      title: 'PGA Tour Golf',
+      IconComponent: Flag,
       badge: '6-Golfer Roster',
       accentColor: '#2B6C4A',
       description: 'Turn PGA tournament pools into balanced multi-entry portfolios with projection-driven knapsack solvers and exposure caps.',
@@ -110,33 +111,38 @@ export default function SportOverview({ onSelectSport }) {
 
       {/* Sport Selector Cards */}
       <section className="sports-grid">
-        {sports.map(s => (
-          <div 
-            key={s.id} 
-            className="sport-card"
-            onClick={() => onSelectSport(s.id)}
-          >
-            <div className="sport-card-top">
-              <span className="sport-card-emoji">{s.icon}</span>
-              <span className="sport-card-badge">{s.badge}</span>
-            </div>
-            <h3 className="sport-card-title">{s.title}</h3>
-            <p className="sport-card-desc">{s.description}</p>
-            
-            <div className="sport-card-roster">{s.rosterInfo}</div>
+        {sports.map(s => {
+          const Icon = s.IconComponent;
+          return (
+            <div 
+              key={s.id} 
+              className="sport-card"
+              onClick={() => onSelectSport(s.id)}
+            >
+              <div className="sport-card-top">
+                <div className="sport-card-icon-wrap">
+                  <Icon size={18} className="text-blue-400" />
+                </div>
+                <span className="sport-card-badge">{s.badge}</span>
+              </div>
+              <h3 className="sport-card-title">{s.title}</h3>
+              <p className="sport-card-desc">{s.description}</p>
+              
+              <div className="sport-card-roster">{s.rosterInfo}</div>
 
-            <div className="sport-card-tags">
-              {s.tags.map(t => (
-                <span key={t} className="sport-tag">{t}</span>
-              ))}
-            </div>
+              <div className="sport-card-tags">
+                {s.tags.map(t => (
+                  <span key={t} className="sport-tag">{t}</span>
+                ))}
+              </div>
 
-            <button className="sport-card-action">
-              <span>Open {s.title} Pool</span>
-              <ArrowRight size={15} />
-            </button>
-          </div>
-        ))}
+              <button className="sport-card-action">
+                <span>Open {s.title} Pool</span>
+                <ArrowRight size={15} />
+              </button>
+            </div>
+          );
+        })}
       </section>
 
       {/* Workflow Step Strip */}
@@ -154,7 +160,7 @@ export default function SportOverview({ onSelectSport }) {
             <div className="step-num">02</div>
             <div className="step-content">
               <h4>Lock, Exclude & Boost</h4>
-              <p>Lock core anchors 🔒, eliminate fades ⛔, or fine-tune individual player boost points and exposure caps.</p>
+              <p>Lock core anchors, eliminate fades, or fine-tune individual player boost points and exposure caps.</p>
             </div>
           </div>
           <div className="workflow-step">

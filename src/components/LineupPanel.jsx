@@ -82,7 +82,7 @@ export default function LineupPanel({
       <div className="lineup-panel-header">
         <div className="flex items-center gap-4 flex-wrap">
           <div className="flex items-center gap-2">
-            <span className="text-lg font-bold text-white tracking-tight">Lineups ({lineups.length})</span>
+            <span className="lineup-panel-title">Lineups ({lineups.length})</span>
             {warning && (
               <span className="badge-warning" title={warning}>
                 <AlertCircle size={13} />
@@ -112,15 +112,15 @@ export default function LineupPanel({
         <div className="flex items-center gap-2.5">
           <button 
             onClick={onClearLineups} 
-            className="clear-btn"
+            className="btn-secondary"
             title="Clear all generated lineups"
           >
-            <Trash2 size={14} />
+            <Trash2 size={14} className="text-rose-600" />
             <span>Clear</span>
           </button>
           <button 
             onClick={onExportCsv} 
-            className="export-btn"
+            className="btn-primary"
             title="Download CSV formatted for direct DraftKings import"
           >
             <Download size={14} />
@@ -133,19 +133,19 @@ export default function LineupPanel({
       <div className="portfolio-metric-strip">
         <div className="metric-box">
           <span className="metric-box-label">Top Lineup Proj</span>
-          <span className="metric-box-val text-emerald-400 font-mono">{topProjection.toFixed(1)}</span>
+          <span className="metric-box-val text-emerald-600">{topProjection.toFixed(1)}</span>
         </div>
         <div className="metric-box">
           <span className="metric-box-label">Avg Portfolio Proj</span>
-          <span className="metric-box-val text-blue-400 font-mono">{avgProjection}</span>
+          <span className="metric-box-val text-blue-600">{avgProjection}</span>
         </div>
         <div className="metric-box">
           <span className="metric-box-label">Avg Salary Spent</span>
-          <span className="metric-box-val text-zinc-200 font-mono">${avgSalary.toLocaleString()}</span>
+          <span className="metric-box-val">${avgSalary.toLocaleString()}</span>
         </div>
         <div className="metric-box">
           <span className="metric-box-label">Avg Cumulative Own</span>
-          <span className="metric-box-val text-amber-400 font-mono">{avgOwnership}%</span>
+          <span className="metric-box-val text-amber-600">{avgOwnership}%</span>
         </div>
       </div>
 
@@ -167,17 +167,17 @@ export default function LineupPanel({
                   onClick={() => setExpandedLineupIndex(isExpanded ? null : idx)}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="lineup-number-badge">#{idx + 1}</span>
+                    <span className="lineup-rank-badge">#{idx + 1}</span>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-bold text-white font-mono text-base">
+                        <span className="font-bold text-slate-900 text-base">
                           {lineup.totalProjection.toFixed(1)} FPTS
                         </span>
-                        <span className="text-xs px-2 py-0.5 rounded-full font-mono bg-zinc-800 text-zinc-300 border border-zinc-700">
+                        <span className="lineup-salary-pill">
                           ${lineup.totalSalary.toLocaleString()}
                         </span>
                         {remainingSalary > 0 && (
-                          <span className="text-[11px] text-zinc-400 font-mono">
+                          <span className="text-[11px] text-slate-500 font-mono">
                             (${remainingSalary.toLocaleString()} rem)
                           </span>
                         )}
@@ -188,18 +188,18 @@ export default function LineupPanel({
                   <div className="flex items-center gap-2">
                     <button
                       onClick={(e) => { e.stopPropagation(); handleCopyLineup(lineup, idx); }}
-                      className="text-xs p-1.5 rounded text-zinc-400 hover:text-white hover:bg-zinc-800 transition"
+                      className="btn-ghost"
                       title="Copy roster to clipboard"
                     >
-                      {copiedIndex === idx ? <span className="text-emerald-400 text-xs font-semibold">Copied!</span> : <Copy size={14} />}
+                      {copiedIndex === idx ? <span className="text-emerald-600 text-xs font-semibold">Copied!</span> : <Copy size={14} />}
                     </button>
-                    <div className="text-zinc-400">
+                    <div className="text-slate-400">
                       {isExpanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
                     </div>
                   </div>
                 </div>
 
-                {/* Avatar Preview Row (Top Competitor Feature: Sleeper / Sorare) */}
+                {/* Avatar Preview Row */}
                 <div className="lineup-avatars-row">
                   {lineup.players.map((p, pIdx) => (
                     <div key={p.id || pIdx} className="avatar-chip-wrap" title={`${p.name} - $${p.salary} (${p.projection} FPTS)`}>
@@ -221,18 +221,18 @@ export default function LineupPanel({
                     <table className="lineup-table">
                       <thead>
                         <tr>
-                          <th className="text-left py-1 text-xs text-zinc-400 font-medium">Athlete</th>
-                          {currentSport === 'nba' && <th className="text-center py-1 text-xs text-zinc-400">Pos</th>}
-                          <th className="text-right py-1 text-xs text-zinc-400 font-medium">Salary</th>
-                          <th className="text-right py-1 text-xs text-zinc-400 font-medium">Proj</th>
-                          <th className="text-right py-1 text-xs text-zinc-400 font-medium">Value</th>
+                          <th className="text-left py-2 text-xs text-slate-500 font-semibold uppercase tracking-wider">Athlete</th>
+                          {currentSport === 'nba' && <th className="text-center py-2 text-xs text-slate-500 font-semibold uppercase">Pos</th>}
+                          <th className="text-right py-2 text-xs text-slate-500 font-semibold uppercase tracking-wider">Salary</th>
+                          <th className="text-right py-2 text-xs text-slate-500 font-semibold uppercase tracking-wider">Proj</th>
+                          <th className="text-right py-2 text-xs text-slate-500 font-semibold uppercase tracking-wider">Value</th>
                         </tr>
                       </thead>
                       <tbody>
                         {lineup.players.map((p) => {
                           const val = (p.projection / (p.salary / 1000)).toFixed(1);
                           return (
-                            <tr key={p.id} className="border-t border-zinc-800/60">
+                            <tr key={p.id} className="border-t border-slate-200">
                               <td className="py-2">
                                 <div className="lineup-player-cell">
                                   <AthleteAvatar
@@ -256,13 +256,13 @@ export default function LineupPanel({
                                   <span className="pos-tag text-[10px]">{p.slot || p.positions?.[0]}</span>
                                 </td>
                               )}
-                              <td className="text-right py-2 font-mono text-xs text-zinc-300 tabular-nums">
+                              <td className="text-right py-2 text-xs font-bold text-slate-900 tabular-nums">
                                 ${p.salary.toLocaleString()}
                               </td>
-                              <td className="text-right py-2 font-mono text-xs font-bold text-blue-400 tabular-nums">
+                              <td className="text-right py-2 text-xs font-bold text-blue-700 tabular-nums">
                                 {p.projection.toFixed(1)}
                               </td>
-                              <td className="text-right py-2 font-mono text-xs text-zinc-400 tabular-nums">
+                              <td className="text-right py-2 text-xs text-slate-600 tabular-nums">
                                 {val}x
                               </td>
                             </tr>
@@ -283,17 +283,17 @@ export default function LineupPanel({
             <table className="exposure-table">
               <thead>
                 <tr>
-                  <th className="text-left py-2 text-xs text-zinc-400 font-medium">Athlete</th>
-                  <th className="text-center py-2 text-xs text-zinc-400 font-medium">Lineups</th>
-                  <th className="text-left py-2 text-xs text-zinc-400 font-medium w-52">Actual Exposure</th>
-                  <th className="text-right py-2 text-xs text-zinc-400 font-medium">Max Limit</th>
+                  <th className="text-left py-2 text-xs text-slate-500 font-semibold uppercase tracking-wider">Athlete</th>
+                  <th className="text-center py-2 text-xs text-slate-500 font-semibold uppercase tracking-wider">Lineups</th>
+                  <th className="text-left py-2 text-xs text-slate-500 font-semibold uppercase tracking-wider w-52">Actual Exposure</th>
+                  <th className="text-right py-2 text-xs text-slate-500 font-semibold uppercase tracking-wider">Max Limit</th>
                 </tr>
               </thead>
               <tbody>
                 {uniquePlayers.map(p => {
                   const isHigh = p.actualExpPct >= 50;
                   return (
-                    <tr key={p.id} className="border-t border-zinc-800/80">
+                    <tr key={p.id} className="border-t border-slate-200">
                       <td className="py-2.5">
                         <div className="exposure-athlete-cell">
                           <AthleteAvatar
@@ -314,7 +314,7 @@ export default function LineupPanel({
                           </div>
                         </div>
                       </td>
-                      <td className="text-center py-2.5 font-mono text-xs text-zinc-300">
+                      <td className="text-center py-2.5 text-xs font-semibold text-slate-800 tabular-nums">
                         {p.appearances} / {lineups.length}
                       </td>
                       <td className="py-2.5">
@@ -332,7 +332,7 @@ export default function LineupPanel({
                           </span>
                         </div>
                       </td>
-                      <td className="text-right py-2.5 font-mono text-xs text-zinc-400">
+                      <td className="text-right py-2.5 text-xs text-slate-600 tabular-nums">
                         {p.maxExposure ?? 100}%
                       </td>
                     </tr>
